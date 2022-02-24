@@ -1,0 +1,54 @@
+@startuml
+actor User as user
+participant "Homemade\nRecipebowl" as hr
+participant "Server" as server
+database "Trained Model/\nRecipes Database" as db
+ 
+
+user -> hr: User Login
+user -> hr: Ingredients/Image Input
+
+hr -> server: Verify Login
+hr -> server: Verify Input
+
+alt If login is valid
+
+    server --> hr: Login Valid
+    hr --> user: Successfully Logged in
+
+else Else
+
+    server --> hr: Login Invalid
+    hr --> user: Login Unsuccessful
+
+end
+
+alt If Input is valid
+
+    server --> hr: Valid Input
+    hr -> server: User Input
+    server -> db: User Input
+    db --> server: Recipes Generated
+    server --> hr: Recipes Generated
+    hr -> user: Recipes
+
+else Else
+
+    server --> hr: Invalid Input
+    hr -> user: Re-enter Input
+
+end
+
+user -> hr: Cuisine Input
+hr -> server: Cuisine Input
+server -> db: Cuisine Input
+
+db --> server: Recipes Fetched
+server --> hr: Recipes Fetched
+hr -> user: Recipes
+
+user -> hr: Favorite Recipes
+hr -> server: Favorite Recipes
+server --> hr: Added to Favorites
+hr --> user: Added to Favorites
+@enduml

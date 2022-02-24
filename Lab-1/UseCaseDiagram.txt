@@ -1,0 +1,45 @@
+@startuml
+left to right direction
+actor "User" as user
+actor "Administrator" as admin
+rectangle Homemade-Recipebowl{
+  usecase "Login" as L
+  usecase "Display\nLogin Error" as L1
+  usecase "Verification" as L2
+  
+  usecase "Input" as I
+  usecase "Text" as I1
+  usecase "Image" as I2
+  usecase "Cuisine" as I3
+  usecase "Recipe\nRating" as I4
+
+  usecase "Display\nInvalid Input\nError" as err
+  
+  usecase "ML Model 1" as ML1
+  usecase "ML Model 2" as ML2
+  usecase "Database" as db
+
+}
+
+user --> L
+user --> I
+
+(L) .> (L2) : include
+(L1) .> (L) : extends
+
+(err) .> (I) : extends
+
+I1 --> I
+I2 --> I
+I3 --> I
+I4 --> I
+
+(I1) .> (ML1) : include
+(I2) .> (ML2) : include
+(I3) .> (db) : include
+
+admin --> L
+admin --> ML1
+admin --> ML2
+admin --> db
+@enduml
